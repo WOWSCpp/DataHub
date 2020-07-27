@@ -2,16 +2,21 @@ from django.shortcuts import redirect, render
 from .models import Document
 from .forms import DocumentForm
 import os
-from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from pathlib import Path
 
-@csrf_exempt
 def home(request):
-    return render(request, 'list.html', {'what':'Django File Upload'})
+    return render(request, 'home.html')
 
-@csrf_exempt
+def jump_to_upload_page(request):
+    if request.method == 'GET':
+        print("jump_to_upload_page")
+        return render(request, 'upload.html')
+    # else:
+    #     upload(request)
+    #     return render(request, 'home.html')
+
 def upload(request):
     if request.method == 'POST':
         handle_uploaded_file(request.FILES['file'], str(request.FILES['file']))
@@ -19,7 +24,7 @@ def upload(request):
  
     return HttpResponse("Failed")
 
- 
+
 def handle_uploaded_file(file, filename):
     path = '/home/ubuntu/'
     if not os.path.exists(path):
@@ -29,12 +34,5 @@ def handle_uploaded_file(file, filename):
         for chunk in file.chunks():
             destination.write(chunk)
 
-@csrf_exempt
 def download(request, path):
-    file_path = os.path.join(settings.MEDIA_ROOT, path)
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as fh:
-            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
-            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
-            return response
-    raise Http404
+    pass
