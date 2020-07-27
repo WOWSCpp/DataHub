@@ -10,9 +10,9 @@ def home(request):
     return render(request, 'home.html')
 
 def jump_to_upload_page(request):
-    if request.method == 'GET':
-        print("jump_to_upload_page")
-        return render(request, 'upload.html')
+    # if request.method == 'GET':
+    print("jump_to_upload_page")
+    return render(request, 'upload.html')
     # else:
     #     upload(request)
     #     return render(request, 'home.html')
