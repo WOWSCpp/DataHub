@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class UploadPageConfig(AppConfig):
+class MyappConfig(AppConfig):
     name = 'upload_page'
